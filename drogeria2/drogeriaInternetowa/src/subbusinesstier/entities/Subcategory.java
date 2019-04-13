@@ -7,6 +7,7 @@ package subbusinesstier.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import subbusinesstier.Factory;
 
 /**
@@ -18,9 +19,6 @@ public class Subcategory {
     List<Product> products;
     private Category category;
 
-    public Subcategory() {
-        products = new ArrayList<>();
-    }
 
     public Subcategory(String name) {
        this.name=name;
@@ -72,13 +70,31 @@ public class Subcategory {
            return product.toString();
        }
        
-        return null;
+        return "Próba dodania tego sameg produktu";
     }
     
+   
     @Override
     public String toString(){
         String result = "Name:"+getName();
-        result += "Category:"+category.getName();
         return result;
     }
+    
+    @Override
+public boolean equals(Object obj) {
+if (this == obj) {
+return true;
+}
+if (obj == null) {
+return false;
+}
+if (getClass() != obj.getClass()) {
+return false;
+}
+final Subcategory other = (Subcategory) obj;
+if (!Objects.equals(this.name, other.name)) {
+return false;
+}
+return true;
+}
     }

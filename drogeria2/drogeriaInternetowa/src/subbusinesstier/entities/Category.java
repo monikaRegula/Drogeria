@@ -69,8 +69,8 @@ public class Category {
     
     @Override
     public String toString(){
-        String result = "Category:"+name;
-        result += " Subcategory: "+subcategories.size();
+        String result = "Category: "+name;
+        result += " Subcategories: "+subcategories.toString();
         return result;
     }
     
@@ -84,25 +84,23 @@ public class Category {
         return null;
     }
 
-    public String addSubcategory(String subcategory) {
-        Subcategory help = new Subcategory(subcategory);
-       if(searchSubcategory(help) == null){
-           subcategories.add(help);
-           help.setCategory(this);
-           return subcategories.toString();
+    public String addSubcategory(String name) {
+        Subcategory subcategory = new Subcategory(name);
+       if(searchSubcategory(subcategory) == null){
+           subcategories.add(subcategory);
+           subcategory.setCategory(this);
+           return toString();
        }
-       return null;
+       return "Próba dodania takiej samej podkategorii";
     }
-    
-      public String addProduct(String[] data){
-     //  Factory factory = new Factory();
-       Subcategory help = new Subcategory(data[8]), existSubcategory;
-       if((existSubcategory = searchSubcategory(help)) != null){
-          return existSubcategory.addProduct(data);
-   //        System.out.println(existSubcategory.getName()+ " "+ existSubcategory.getProducts().toString());
+ 
+      
+      public String addProduct(String datasubcategory, String []dataproduct)
+{ Subcategory subcategory = new Subcategory(datasubcategory),existsubcategory;
+if ((existsubcategory=searchSubcategory(subcategory)) != null) {
+return existsubcategory.addProduct(dataproduct);
+}
+return "Brak podkategorii";
+}
 
-          
-       }
-        return null;
-    }
 }

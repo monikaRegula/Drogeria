@@ -1,5 +1,7 @@
 package subbusinesstier.entities;
 
+import java.util.Objects;
+
 
 public class Product {
     private String name;
@@ -87,17 +89,40 @@ public class Product {
         this.size = size;
     }
 
-    
-    
-    
-    
-    
+    @Override
+public boolean equals(Object obj) {
+if (this == obj) {
+return true; }
+if (obj == null) {
+return false; }
+if (getClass() != obj.getClass()) {
+return false; }
+final Product other = (Product) obj;
+if (Double.doubleToLongBits(this.price) != Double.doubleToLongBits(other.price)) {
+return false; }
+if (this.barCode != other.barCode) {
+return false; }
+if (!Objects.equals(this.name, other.name)) {
+return false; }
+if (!Objects.equals(this.type, other.type)) {
+return false; }
+if (!Objects.equals(this.brand, other.brand)) {
+return false; }
+if (!Objects.equals(this.allergen, other.allergen)) {
+return false; }
+if (!Objects.equals(this.photo, other.photo)) {
+return false; }
+if (!Objects.equals(this.size, other.size)) {
+return false; }
+return true;
+}
+ 
     @Override
     public String toString(){
-        return "Product{";/* + getName() +" ,category: "
+        return "Product{" + getName() +" ,category:" + getSubcategory().getCategory().getName()
                 +" ,subcategory:"+getSubcategory().getName()
                 +", type: "+getType()
-                +" ,brand: "+getBrand()+", bar code:"+getBarCode()+"\n";*/
+                +" ,brand: "+getBrand()+", bar code:"+getBarCode();
     }
     
  

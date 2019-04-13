@@ -46,6 +46,33 @@ public class Facade {
         return categories;
     }
     
+    public String addCategory(String name) {
+Category category = new Category(name);
+if (searchCategory(category) == null) {
+categories.add(category);
+return category.toString();
+}
+return "Proba dodania takiej samej kategorii";
+}
+    
+    
+public Category searchCategory(Category cat){
+int idx;
+if ((idx = categories.indexOf(cat)) != -1) {
+return categories.get(idx);
+}
+return null;
+}
+ 
+
+    public String Categoryitems() {
+           ArrayList<String> dane = new ArrayList();
+            for (Category p : categories) {
+            dane.add(p.toString()+"\n");
+            }
+        return dane.toString();
+}
+    
     
     
     public String addClient(String[] data){
@@ -68,41 +95,41 @@ public class Facade {
         return null;
     }
 
-    //to dodalam
-    public String addProductToShoppingBag(String[] data1, String[] data2) {
-        Factory factory = new Factory();
-
-        Product helpProduct = factory.createProduct(data1), product;
-        Client helpClient = factory.createClient(data2), client;
-
-        product = searchProduct(helpProduct);
-        client = searchClient(helpClient);
-
-        if (client != null && product != null) {
-            client.addProductToShoppingBag(product);
-            return "Product has been added";
-        } else {
-            return "Product has not been added";
-        }
-    }
-
-     //to dodalam
-     public String removeProductFromShoppingBag(String[] data1, String[] data2) {
-        Factory factory = new Factory();
-
-        Product helpProduct = factory.createProduct(data1), product;
-        Client helpClient = factory.createClient(data2), client;
-
-        product = searchProduct(helpProduct);
-        client = searchClient(helpClient);
-
-        if (client != null && product != null) {
-            client.removeProductFromShoppingBag(product);
-            return "Product has been removed";
-        } else {
-            return "Product has not been removed";
-        }
-    }
+//    //to dodalam
+//    public String addProductToShoppingBag(String[] data1, String[] data2) {
+//        Factory factory = new Factory();
+//
+//        Product helpProduct = factory.createProduct(data1), product;
+//        Client helpClient = factory.createClient(data2), client;
+//
+//        product = searchProduct(helpProduct);
+//        client = searchClient(helpClient);
+//
+//        if (client != null && product != null) {
+//            client.addProductToShoppingBag(product);
+//            return "Product has been added";
+//        } else {
+//            return "Product has not been added";
+//        }
+//    }
+////
+//     //to dodalam
+//     public String removeProductFromShoppingBag(String[] data1, String[] data2) {
+//        Factory factory = new Factory();
+//
+//        Product helpProduct = factory.createProduct(data1), product;
+//        Client helpClient = factory.createClient(data2), client;
+//
+//        product = searchProduct(helpProduct);
+//        client = searchClient(helpClient);
+//
+//        if (client != null && product != null) {
+//            client.removeProductFromShoppingBag(product);
+//            return "Product has been removed";
+//        } else {
+//            return "Product has not been removed";
+//        }
+//    }
 
     //to zmienilam, tak ze do zamowienia jest dodany koszyk i jak sie uda to klient dostaje nowy koszyk
     public String addOrder(String[] data1, String[] data2) {
@@ -175,26 +202,6 @@ public class Facade {
         return null;
     }
        
- 
-    public Category searchCategory(Category help){
-       int idx;
-        if ((idx = categories.indexOf(help)) != -1) {
-           help = categories.get(idx);
-            return help;
-        }
-        return null;
-    }
-    
- 
-     public String addCategory(String name){
-       Category category = new Category(name);
-        if (searchCategory(category) == null) {
-           this.categories.add(category);
-            return categories.toString();
-        }
-        return null;
-    }
-   
 
     //wyszukiwanie po podkategoriach
     //zwraca liste produktów dla podkategorii
@@ -219,48 +226,58 @@ public class Facade {
         return null;
     }
      
-   
-      //dodając subkattegorie ustawiam jej kategorie
-       public String addSubcategory(String categoryName, String subcategory){
-           Category help = new Category(categoryName),existcatgory;
-           if((existcatgory=searchCategory(help)) != null){
-               return existcatgory.addSubcategory(subcategory);
-//               System.out.println("Facade >>addSubcategory");
-           }
-            return null;
-           
-       }
-
+     
+     public String addProduct(String datacategory,String datasubcategory, String []dataproduct)
+{ Category category = new Category(datacategory),existcategory;
+if ((existcategory=searchCategory(category)) != null) {
+return existcategory.addProduct(datasubcategory, dataproduct);
+}
+return "Brak takiej kategorii";
+}
+     
        
-    public String addProduct(String[] data){
-      // Factory factory = new Factory();
-       Category help = new Category(data[7]);
-       Category existCategory;
-       if((existCategory = searchCategory(help)) != null){
-           existCategory.addProduct(data);
-       }
-        return null;
+       public String addSubCategory(String datacategory,String datasubcategory)
+{
+    Category category = new Category(datacategory),existcategory;
+    if ((existcategory=searchCategory(category)) != null) {
+    return existcategory.addSubcategory(datasubcategory);
     }
+    return "Brakuje podanej kategorii";
+}
+       
+   
      
     public static void main(String[] args) {
-        //przykładowe produkty
-      String[] exampleProduct = {"pomadka","39","No allergens","Mac","czerwona extra super lipsss",".jpg","222000111","Make up","Lips"};
-      String[] exampleProduct2 = {"tusz do rzęs","39","No allergens","Maybelline","Extra long",".jpg","Make up","Eyes","222000111"};
-    
-      Facade facade  = new Facade();  
-        
- 
-        System.out.println(facade.addCategory("Make up"));
-        System.out.println(facade.addSubcategory("Make up","Eyes"));
-        System.out.println(facade.addProduct(exampleProduct));
-      
-     // System.out.println("Category added: "+facade.addCategory(makeUp.getName()));
-     // System.out.println("Searching by category: "+ facade.searchByCategory(makeUp));
-     // System.out.println(facade.searchBySubcategory("Eyes", "Make up"));
-      
-      
-  
      
- 
+Facade facade = new Facade();
+String c1 = "Make up";
+String c2 = "Hair";
+System.out.println(facade.addCategory(c1));
+System.out.println(facade.addCategory(c2));
+System.out.println(facade.addCategory(c1));
+System.out.println("Kategorie...");
+System.out.println(facade.Categoryitems());
+String subc1 ="Lips";
+String subc2 ="Eyes";
+String subc3 ="conditioner";
+String subc4 ="shampoo";
+System.out.println("Podkategorie...");
+System.out.println(facade.addSubCategory(c1,subc1));
+System.out.println(facade.addSubCategory(c1,subc2));
+System.out.println(facade.addSubCategory(c1,subc1));
+System.out.println(facade.addSubCategory(c2,subc3));
+System.out.println(facade.addSubCategory(c2,subc4));
+System.out.println(facade.addSubCategory(c2,subc4));
+System.out.println(facade.addSubCategory(c2+"n",subc4));
+System.out.println("Produkty...");
+String[] exampleProduct1 = {"pomadka", "39", "No allergens", "Mac", "czerwona extra super lipsss", ".jpg","222000111", "Make up","Lips", };
+String[] exampleProduct2 = {"tusz do rzęs", "39", "No allergens", "Maybelline", "Extra long", ".jpg","222000111", "Make up", "Eyes", };
+System.out.println(facade.addProduct(c1,subc1,exampleProduct1));
+System.out.println(facade.addProduct(c1,subc2,exampleProduct2));
+System.out.println(facade.addProduct(c1,subc1,exampleProduct1));
+System.out.println(facade.addProduct(c2,subc1,exampleProduct1));
+System.out.println(facade.addProduct(c2+"n",subc1,exampleProduct1));
+     
+
     }
 }
